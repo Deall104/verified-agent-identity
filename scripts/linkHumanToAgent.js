@@ -11,15 +11,15 @@ const {
 const { computeAttestationHash } = require("./shared/attestation");
 const { getInitializedRuntime } = require("./shared/bootstrap");
 const { signChallenge } = require("./signChallenge");
-
-const transactionSender = "0x270D01a51ec474Fa7a534eAD9F519983541E5acD"; // relay sender address
-const verifierDid =
-  "did:iden3:billions:main:2VmAkXrihYaLJSNZms19Ytg28xBFeGjpNafR1ciPZS"; // should be the same as dashboard DID
-const callbackBase =
-  "https://attestation-relay.polygonid.me/api/claim?attestation=";
-const walletAddress = "https://billions-wallet-dev.internal-iden3-dev.com";
-const verificationMessage =
-  "Complete the verification to link your identity to the agent";
+const {
+  transactionSender,
+  verifierDid,
+  callbackBase,
+  walletAddress,
+  verificationMessage,
+  pairingReasonMessage,
+  accept,
+} = require("./constants");
 
 function createPOUScope(transactionSender) {
   return {
@@ -59,12 +59,13 @@ function createAuthRequestMessage(jws, recipientDid) {
   ];
 
   const message = auth.createAuthorizationRequestWithMessage(
-    "Link Human to Agent",
-    "Complete the verification to link your identity to the agent",
+    pairingReasonMessage,
+    verificationMessage,
     verifierDid,
     encodeURI(callback),
     {
       scope,
+      accept: accept,
     },
   );
 

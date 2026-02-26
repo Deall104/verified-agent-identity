@@ -1,4 +1,5 @@
 const { ethers } = require("ethers");
+const { DID } = require("@iden3/js-iden3-core");
 
 const ATTESTATION_SCHEMA_ID =
   "0x1edd779a711895a6f8bc23826757908823dd58ac198b4cf962d3adb9fd38845a"; // bytes32
@@ -23,7 +24,7 @@ function buildJsonAttestation(req) {
     },
     recipient: {
       did: req.recipientDid,
-      iden3Id: 0n.toString(), // recipient.iden3Id — nullified
+      iden3Id: DID.idFromDID(DID.parse(req.recipientDid)).bigInt().toString(),
       ethereumAddress: req.recipientEthAddress,
     },
     expirationTime: EXPIRATION_TIME.toString(),
