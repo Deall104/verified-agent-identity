@@ -1,21 +1,3 @@
-name: Verify Human Identity
-on:
-  workflow_dispatch:
-jobs:
-  verify:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-      - name: Step 1 - Install ClawHub skill
-        run: npx clawhub@latest install verified-agent-identity
-      - name: Install script dependencies
-        run: |
-          npm install ethers@5.7.2
-      - name: Step 3 - Link Human to Agent
-        run: |
-          node -e 'const { linkHumanToAgent } = require("./node_modules/verified-agent-identity/dist/index"); const challenge = {"name": "Deall104", "description": "Deall104 AI Agent", "did": "did:iden3:billions:main:2VuHoz6y88EDCtMEfhofb8J2bjovqJxSRgsqAWEXiL"}; linkHumanToAgent(challenge).then(url => console.log("Success:", url)).catch(err => { console.error(err); process.exit(1); });'
+{
+  "identity": "Deall104"
+}
